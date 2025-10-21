@@ -1,7 +1,7 @@
 // Modern email templates for the application
 
 const getEmailVerificationTemplate = (userName, verificationUrl, isResend = false) => {
-  return `
+    return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -196,10 +196,10 @@ const getEmailVerificationTemplate = (userName, verificationUrl, isResend = fals
             <h1 class="greeting">Welcome, ${userName}! 👋</h1>
             
             <p class="message">
-                ${isResend ? 
-                    'We noticed you requested a new verification email. Please verify your email address to complete your account setup and start enjoying our premium services.' :
-                    'Thank you for joining MVP Ecommerce! To complete your registration and start shopping with us, please verify your email address.'
-                }
+                ${isResend ?
+            'We noticed you requested a new verification email. Please verify your email address to complete your account setup and start enjoying our premium services.' :
+            'Thank you for joining MVP Ecommerce! To complete your registration and start shopping with us, please verify your email address.'
+        }
             </p>
             
             <div class="button-container">
@@ -242,7 +242,7 @@ const getEmailVerificationTemplate = (userName, verificationUrl, isResend = fals
 };
 
 const getWelcomeTemplate = (userName) => {
-  return `
+    return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -408,7 +408,6 @@ const getWelcomeTemplate = (userName) => {
                 </div>
             </div>
             
-            <a href="#" class="cta-button">Start Shopping Now</a>
         </div>
         
         <!-- Footer -->
@@ -425,6 +424,6 @@ const getWelcomeTemplate = (userName) => {
 };
 
 module.exports = {
-  getEmailVerificationTemplate,
-  getWelcomeTemplate
+    getEmailVerificationTemplate,
+    getWelcomeTemplate
 };
