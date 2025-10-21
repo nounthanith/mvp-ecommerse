@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema({
 });
 
 // Hash password before saving
-userSchema.pre('save', async function(next) {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     return next();
   }
@@ -67,12 +67,12 @@ userSchema.pre('save', async function(next) {
 });
 
 // Compare password method
-userSchema.methods.comparePassword = async function(candidatePassword) {
+userSchema.methods.comparePassword = async function (candidatePassword) {
   return await bcrypt.compare(candidatePassword, this.password);
 };
 
 // Generate email verification token
-userSchema.methods.generateEmailVerificationToken = function() {
+userSchema.methods.generateEmailVerificationToken = function () {
   const token = crypto.randomBytes(32).toString('hex');
   this.emailVerificationToken = crypto.createHash('sha256').update(token).digest('hex');
   this.emailVerificationExpires = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
@@ -86,7 +86,7 @@ userSchema.index({ emailVerificationExpires: 1 });
 userSchema.index({ isEmailVerified: 1 });
 
 // Remove password from JSON output
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
   const userObject = this.toObject();
   delete userObject.password;
   return userObject;

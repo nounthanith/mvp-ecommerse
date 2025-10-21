@@ -39,7 +39,7 @@ const cartSchema = new mongoose.Schema({
 });
 
 // Calculate totals before saving
-cartSchema.pre('save', function(next) {
+cartSchema.pre('save', function (next) {
   let totalPrice = 0;
   let totalItems = 0;
 

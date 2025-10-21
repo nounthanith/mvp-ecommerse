@@ -181,18 +181,18 @@ const getCategoryProducts = asyncHandler(async (req, res) => {
     });
   }
 
-  const products = await Product.find({ 
-    category: req.params.id, 
-    isActive: true 
+  const products = await Product.find({
+    category: req.params.id,
+    isActive: true
   })
     .populate('category', 'name slug')
     .sort({ createdAt: -1 })
     .skip(skip)
     .limit(limit);
 
-  const total = await Product.countDocuments({ 
-    category: req.params.id, 
-    isActive: true 
+  const total = await Product.countDocuments({
+    category: req.params.id,
+    isActive: true
   });
 
   res.json({

@@ -55,7 +55,7 @@ const productSchema = new mongoose.Schema({
     type: Number,
     default: 0,
     validate: {
-      validator: function(value) {
+      validator: function (value) {
         // Only validate if rating is provided and not 0
         if (value !== null && value !== undefined && value !== 0) {
           return value >= 1 && value <= 5;
@@ -87,7 +87,7 @@ const productSchema = new mongoose.Schema({
 });
 
 // Generate slug before saving
-productSchema.pre('save', function(next) {
+productSchema.pre('save', function (next) {
   if (this.isModified('name')) {
     this.slug = this.name
       .toLowerCase()

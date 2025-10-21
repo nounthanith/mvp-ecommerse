@@ -60,14 +60,14 @@ const handleUploadError = (err, req, res, next) => {
       });
     }
   }
-  
+
   if (err.message === 'Only image files are allowed!') {
     return res.status(400).json({
       success: false,
       message: 'Only image files are allowed!'
     });
   }
-  
+
   next(err);
 };
 

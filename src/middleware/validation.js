@@ -131,7 +131,7 @@ const createOrderValidation = Joi.object({
 const validate = (schema) => {
   return (req, res, next) => {
     const { error } = schema.validate(req.body);
-    
+
     if (error) {
       return res.status(400).json({
         success: false,
@@ -139,7 +139,7 @@ const validate = (schema) => {
         errors: error.details.map(detail => detail.message)
       });
     }
-    
+
     next();
   };
 };

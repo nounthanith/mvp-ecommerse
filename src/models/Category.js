@@ -33,7 +33,7 @@ const categorySchema = new mongoose.Schema({
 });
 
 // Generate slug before saving
-categorySchema.pre('save', function(next) {
+categorySchema.pre('save', function (next) {
   if (this.isModified('name')) {
     this.slug = this.name
       .toLowerCase()

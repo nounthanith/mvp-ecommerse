@@ -38,7 +38,10 @@ app.get('/', (req, res) => {
     success: true,
     message: 'Server is running',
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
+    version: process.env.VERSION || '1.0.0',
+    name: process.env.NAME || 'PICH STORE',
+    description: process.env.DESCRIPTION || 'PICH STORE is a premium shopping experience with premium products and exceptional service.'
   });
 });
 app.use('/api/auth', authRoutes);
@@ -56,7 +59,6 @@ app.use('*', (req, res) => {
   });
 });
 
-// Error handling middleware (must be last)
 app.use(errorHandler);
 
 module.exports = app;

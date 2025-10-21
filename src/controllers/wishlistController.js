@@ -19,7 +19,7 @@ const getWishlist = asyncHandler(async (req, res) => {
   if (validProducts.length !== wishlist.products.length) {
     wishlist.products = validProducts.map(product => product._id);
     await wishlist.save();
-    
+
     // Repopulate the wishlist
     wishlist = await Wishlist.findById(wishlist._id)
       .populate('products', 'name price images slug stock averageRating category');

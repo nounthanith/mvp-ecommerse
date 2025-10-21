@@ -187,7 +187,7 @@ const getEmailVerificationTemplate = (userName, verificationUrl, isResend = fals
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <div class="logo">MVP Ecommerce</div>
+            <div class="logo">PICH STORE</div>
             <div class="tagline">Your Premium Shopping Experience</div>
         </div>
         
@@ -216,16 +216,11 @@ const getEmailVerificationTemplate = (userName, verificationUrl, isResend = fals
             </div>
             
             <div class="divider"></div>
-            
-            <p class="footer-text">
-                If the button doesn't work, copy and paste this link into your browser:<br>
-                <a href="${verificationUrl}" style="color: #667eea; word-break: break-all;">${verificationUrl}</a>
-            </p>
         </div>
         
         <!-- Footer -->
         <div class="footer">
-            <div class="footer-logo">MVP Ecommerce</div>
+            <div class="footer-logo">PICH STORE</div>
             <p style="color: #6b7280; font-size: 14px; margin-bottom: 20px;">
                 Bringing you the best shopping experience with premium products and exceptional service.
             </p>
@@ -237,7 +232,7 @@ const getEmailVerificationTemplate = (userName, verificationUrl, isResend = fals
             </div>
             
             <div class="copyright">
-                © ${new Date().getFullYear()} MVP Ecommerce. All rights reserved.
+                © ${new Date().getFullYear()} PICH STORE. All rights reserved.
             </div>
         </div>
     </div>
@@ -253,7 +248,7 @@ const getWelcomeTemplate = (userName) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to MVP Ecommerce</title>
+    <title>Welcome to PICH STORE</title>
     <style>
         * {
             margin: 0;
@@ -381,7 +376,7 @@ const getWelcomeTemplate = (userName) => {
         <!-- Header -->
         <div class="header">
             <div class="success-icon">🎉</div>
-            <div class="logo">MVP Ecommerce</div>
+            <div class="logo">PICH STORE</div>
             <div style="opacity: 0.9; font-weight: 300;">Welcome to the family!</div>
         </div>
         
@@ -418,7 +413,7 @@ const getWelcomeTemplate = (userName) => {
         
         <!-- Footer -->
         <div class="footer">
-            <div style="font-weight: 600; color: #374151; margin-bottom: 10px;">MVP Ecommerce</div>
+            <div style="font-weight: 600; color: #374151; margin-bottom: 10px;">PICH STORE</div>
             <div style="color: #6b7280; font-size: 14px;">
                 Thank you for choosing us. Happy shopping! 🛒
             </div>

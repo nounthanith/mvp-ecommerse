@@ -14,8 +14,8 @@ const getCart = asyncHandler(async (req, res) => {
   }
 
   // Filter out products that are no longer active or out of stock
-  const validItems = cart.items.filter(item => 
-    item.product && 
+  const validItems = cart.items.filter(item =>
+    item.product &&
     item.product.stock > 0 &&
     item.quantity <= item.product.stock
   );
@@ -72,7 +72,7 @@ const addToCart = asyncHandler(async (req, res) => {
   if (existingItemIndex > -1) {
     // Update quantity
     const newQuantity = cart.items[existingItemIndex].quantity + quantity;
-    
+
     if (newQuantity > product.stock) {
       return res.status(400).json({
         success: false,

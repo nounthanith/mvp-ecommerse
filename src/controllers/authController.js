@@ -369,7 +369,6 @@ const verify = asyncHandler(async (req, res) => {
           <div class="icon">❌</div>
           <h1>Verification Failed</h1>
           <p>Verification token is missing or invalid. Please check your email for the correct verification link.</p>
-          <a href="/" class="button">Go to Homepage</a>
         </div>
       </body>
       </html>
@@ -448,7 +447,6 @@ const verify = asyncHandler(async (req, res) => {
           <div class="icon">⏰</div>
           <h1>Link Expired</h1>
           <p>This verification link is invalid or has expired. Please request a new verification email.</p>
-          <a href="/" class="button">Go to Homepage</a>
         </div>
       </body>
       </html>
@@ -469,7 +467,7 @@ const verify = asyncHandler(async (req, res) => {
       html: getWelcomeTemplate(user.name)
     });
   } catch (emailError) {
-    console.error('Welcome email failed:', emailError);
+    console.error('Welcome email failed:', emailError);   
     // Don't fail the verification if welcome email fails
   }
 
@@ -603,7 +601,6 @@ const verify = asyncHandler(async (req, res) => {
           <strong>✓ What's Next?</strong>
           <p style="margin: 0; color: #4a5568;">You can now log in to your account and start shopping with us!</p>
         </div>
-        <a href="/" class="button">Start Shopping</a>
       </div>
     </body>
     </html>

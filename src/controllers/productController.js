@@ -324,9 +324,9 @@ const deleteProduct = asyncHandler(async (req, res) => {
 const getFeaturedProducts = asyncHandler(async (req, res) => {
   const limit = parseInt(req.query.limit) || 8;
 
-  const products = await Product.find({ 
-    featured: true, 
-    isActive: true 
+  const products = await Product.find({
+    featured: true,
+    isActive: true
   })
     .populate('category', 'name slug')
     .sort({ createdAt: -1 })

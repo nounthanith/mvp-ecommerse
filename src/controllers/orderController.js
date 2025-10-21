@@ -26,7 +26,7 @@ const createOrder = asyncHandler(async (req, res) => {
 
   for (const item of cart.items) {
     const product = item.product;
-    
+
     if (!product || !product.isActive) {
       return res.status(400).json({
         success: false,
