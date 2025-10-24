@@ -10,7 +10,7 @@ const crypto = require('crypto');
 // @access  Public
 const register = asyncHandler(async (req, res) => {
   const startTime = Date.now();
-  const { name, email, password } = req.body;
+  const { name, email, password ,role} = req.body;
 
   console.log('🚀 [REGISTER] Starting registration process:', {
     email: email,
@@ -38,7 +38,8 @@ const register = asyncHandler(async (req, res) => {
   const user = await User.create({
     name,
     email,
-    password
+    password,
+    role: role || 'user'
   });
 
   console.log('✅ [REGISTER] User created successfully:', {

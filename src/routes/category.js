@@ -8,7 +8,8 @@ const {
   getCategoryProducts
 } = require('../controllers/categoryController');
 const { protect, authorize } = require('../middleware/auth');
-const { validate, categoryValidation } = require('../middleware/validation');
+const { validate, categoryValidation, updateCategoryValidation } = require('../middleware/validation');
+const { uploadSingleImage, uploadSingleImageFlexible, handleUploadError } = require('../middleware/upload');
 
 const router = express.Router();
 
@@ -21,8 +22,8 @@ router.get('/:id/products', getCategoryProducts);
 router.use(protect);
 router.use(authorize('admin'));
 
-router.post('/', createCategory);
-router.put('/:id', updateCategory);
+router.post('/', uploadSingleImageFlexible, handleUploadError, validate(categoryValidation), createCategory);
+router.put('/:id', uploadSingleImageFlexible, handleUploadError, validate(updateCategoryValidation), updateCategory);
 router.delete('/:id', deleteCategory);
 
 module.exports = router;

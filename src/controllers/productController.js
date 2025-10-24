@@ -1,6 +1,8 @@
 const Product = require('../models/Product');
 const Category = require('../models/Category');
 const { asyncHandler } = require('../middleware/errorHandler');
+const fs = require('fs');
+const path = require('path');
 
 // Helper function to convert image filenames to full URLs
 const convertImagesToUrls = (product) => {
@@ -207,7 +209,7 @@ const createProduct = asyncHandler(async (req, res) => {
     stock: parseInt(stock),
     category,
     images,
-    isActive: isActive === 'true' || isActive === true || isActive === 'on',
+    isActive: isActive !== undefined ? (isActive === 'true' || isActive === true || isActive === 'on') : true,
     featured: featured === 'true' || featured === true || featured === 'on',
     tags: tags ? (Array.isArray(tags) ? tags : tags.split(',').map(tag => tag.trim())) : [],
     weight: weight ? parseFloat(weight) : undefined,
@@ -307,6 +309,22 @@ const deleteProduct = asyncHandler(async (req, res) => {
     return res.status(404).json({
       success: false,
       message: 'Product not found'
+    });
+  }
+
+  // Delete associated image files if they exist
+  if (product.images && Array.isArray(product.images)) {
+    product.images.forEach(image => {
+      try {
+        const imagePath = path.join(__dirname, '..', 'uploads', image);
+        if (fs.existsSync(imagePath)) {
+          fs.unlinkSync(imagePath);
+          console.log(`Deleted product image: ${imagePath}`);
+        }
+      } catch (error) {
+        console.error(`Error deleting product image ${image}: ${error.message}`);
+        // Don't fail the deletion if image deletion fails
+      }
     });
   }
 

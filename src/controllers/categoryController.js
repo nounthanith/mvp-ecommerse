@@ -1,6 +1,8 @@
 const Category = require('../models/Category');
 const Product = require('../models/Product');
 const { asyncHandler } = require('../middleware/errorHandler');
+const fs = require('fs');
+const path = require('path');
 
 // @desc    Get all categories
 // @route   GET /api/categories
@@ -53,7 +55,10 @@ const getCategory = asyncHandler(async (req, res) => {
 // @route   POST /api/categories
 // @access  Private/Admin
 const createCategory = asyncHandler(async (req, res) => {
-  const { name, description, image, isActive } = req.body;
+  const { name, description, isActive } = req.body;
+  
+  // Get image path from uploaded file (handle any field name)
+  const image = req.files && req.files.length > 0 ? `/uploads/${req.files[0].filename}` : null;
 
   // Basic validation
   if (!name || name.trim().length < 2) {
@@ -63,10 +68,10 @@ const createCategory = asyncHandler(async (req, res) => {
     });
   }
 
-  if (!description || description.trim().length < 10) {
+  if (description && description.trim().length < 0) {
     return res.status(400).json({
       success: false,
-      message: 'Category description is required and must be at least 10 characters'
+      message: 'Category description must be at least 0 characters'
     });
   }
 
@@ -81,9 +86,9 @@ const createCategory = asyncHandler(async (req, res) => {
 
   const category = await Category.create({
     name: name.trim(),
-    description: description.trim(),
+    description: description ? description.trim() : '',
     image,
-    isActive: isActive === 'true' || isActive === true || isActive === 'on'
+    isActive: isActive !== undefined ? (isActive === 'true' || isActive === true || isActive === 'on') : true
   });
 
   res.status(201).json({
@@ -97,7 +102,10 @@ const createCategory = asyncHandler(async (req, res) => {
 // @route   PUT /api/categories/:id
 // @access  Private/Admin
 const updateCategory = asyncHandler(async (req, res) => {
-  const { name, description, image } = req.body;
+  const { name, description, isActive } = req.body;
+  
+  // Get image path from uploaded file if provided (handle any field name)
+  const image = req.files && req.files.length > 0 ? `/uploads/${req.files[0].filename}` : req.body.image;
 
   let category = await Category.findById(req.params.id);
 
@@ -119,9 +127,17 @@ const updateCategory = asyncHandler(async (req, res) => {
     }
   }
 
+  // Prepare update data
+  const updateData = { name, description, image };
+  
+  // Handle isActive field if provided
+  if (isActive !== undefined) {
+    updateData.isActive = isActive === 'true' || isActive === true || isActive === 'on';
+  }
+
   category = await Category.findByIdAndUpdate(
     req.params.id,
-    { name, description, image },
+    updateData,
     {
       new: true,
       runValidators: true
@@ -155,6 +171,20 @@ const deleteCategory = asyncHandler(async (req, res) => {
       success: false,
       message: `Cannot delete category. It has ${productsCount} product(s) associated with it.`
     });
+  }
+
+  // Delete associated image file if it exists
+  if (category.image) {
+    const imagePath = path.join(__dirname, '..', 'uploads', category.image.replace('/uploads/', ''));
+    try {
+      if (fs.existsSync(imagePath)) {
+        fs.unlinkSync(imagePath);
+        console.log(`Deleted category image: ${imagePath}`);
+      }
+    } catch (error) {
+      console.error(`Error deleting category image: ${error.message}`);
+      // Don't fail the deletion if image deletion fails
+    }
   }
 
   await Category.findByIdAndDelete(req.params.id);

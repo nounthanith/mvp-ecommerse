@@ -4,8 +4,9 @@ const Joi = require('joi');
 const registerValidation = Joi.object({
   name: Joi.string().min(2).max(50).required(),
   email: Joi.string().email().required(),
-  password: Joi.string().min(6).required()
-});
+  password: Joi.string().min(6).required(),
+  role: Joi.string().valid('user', 'admin').optional().default('user')
+}).unknown(false);
 
 const loginValidation = Joi.object({
   email: Joi.string().email().required(),
@@ -15,7 +16,7 @@ const loginValidation = Joi.object({
 // Category validation schemas
 const categoryValidation = Joi.object({
   name: Joi.string().min(2).max(50).required(),
-  description: Joi.string().max(200).required(),
+  description: Joi.string().optional(),
   isActive: Joi.alternatives().try(
     Joi.boolean(),
     Joi.string().valid('true', 'false', 'on', 'off', '').custom((value, helpers) => {
@@ -23,7 +24,21 @@ const categoryValidation = Joi.object({
       if (value === 'on' || value === 'true') return true;
       return value;
     })
-  ).optional()
+  ).optional().default(true)
+});
+
+const updateCategoryValidation = Joi.object({
+  name: Joi.string().min(2).max(50).optional(),
+  description: Joi.string().optional(),
+  image: Joi.string().optional(),
+  isActive: Joi.alternatives().try(
+    Joi.boolean(),
+    Joi.string().valid('true', 'false', 'on', 'off', '').custom((value, helpers) => {
+      if (value === '' || value === 'off') return false;
+      if (value === 'on' || value === 'true') return true;
+      return value;
+    })
+  ).optional().default(true)
 });
 
 // Product validation schemas
@@ -76,7 +91,7 @@ const productValidation = Joi.object({
       if (value === 'on' || value === 'true') return true;
       return value;
     })
-  ).optional(),
+  ).optional().default(true),
   tags: Joi.alternatives().try(
     Joi.array().items(Joi.string()),
     Joi.string().custom((value, helpers) => {
@@ -149,6 +164,7 @@ module.exports = {
   registerValidation,
   loginValidation,
   categoryValidation,
+  updateCategoryValidation,
   productValidation,
   addToCartValidation,
   updateCartValidation,

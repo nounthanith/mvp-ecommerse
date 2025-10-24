@@ -38,6 +38,9 @@ const uploadProductImages = upload.array('images', 5);
 // Upload single image
 const uploadSingleImage = upload.single('image');
 
+// Upload single image with flexible field name
+const uploadSingleImageFlexible = upload.any();
+
 // Error handling middleware for multer
 const handleUploadError = (err, req, res, next) => {
   if (err instanceof multer.MulterError) {
@@ -56,7 +59,7 @@ const handleUploadError = (err, req, res, next) => {
     if (err.code === 'LIMIT_UNEXPECTED_FILE') {
       return res.status(400).json({
         success: false,
-        message: 'Unexpected field name for file upload.'
+        message: 'Unexpected field name for file upload. Please use "image" as the field name for single image uploads.'
       });
     }
   }
@@ -74,5 +77,6 @@ const handleUploadError = (err, req, res, next) => {
 module.exports = {
   uploadProductImages,
   uploadSingleImage,
+  uploadSingleImageFlexible,
   handleUploadError
 };
